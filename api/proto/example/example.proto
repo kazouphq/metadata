@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package go.micro.api.metadata;
+
+import "github.com/micro/micro/api/proto/api.proto";
+
+service Metadata {
+    rpc Send(api.Request) returns (api.Response) {}
+}
