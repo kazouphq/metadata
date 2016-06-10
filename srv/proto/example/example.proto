@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package go.micro.srv.metadata;
+
+service Example {
+	rpc Send(Request) returns (Response) {}
+}
+
+message Message {
+	string fileName = 1;
+	string filePath = 2;
+}
+
+message Request {
+	string fileName = 1;
+	string filePath = 2;
+}
+
+message Response {
+	string msg = 1;
+}

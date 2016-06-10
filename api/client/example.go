@@ -1,14 +1,14 @@
 package client
 
 import (
+	example "github.com/kazouphq/metadata/srv/proto/example"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/server"
-	example "github.com/micro/micro/examples/template/srv/proto/example"
 
 	"golang.org/x/net/context"
 )
 
-type exampleKey struct {}
+type exampleKey struct{}
 
 // FromContext retrieves the client from the Context
 func ExampleFromContext(ctx context.Context) (example.ExampleClient, bool) {
@@ -18,7 +18,7 @@ func ExampleFromContext(ctx context.Context) (example.ExampleClient, bool) {
 
 // Client returns a wrapper for the ExampleClient
 func ExampleWrapper(service micro.Service) server.HandlerWrapper {
-	client := example.NewExampleClient("go.micro.srv.template", service.Client())
+	client := example.NewExampleClient("go.micro.srv.metadata", service.Client())
 
 	return func(fn server.HandlerFunc) server.HandlerFunc {
 		return func(ctx context.Context, req server.Request, rsp interface{}) error {

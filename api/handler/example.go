@@ -5,9 +5,9 @@ import (
 	"log"
 
 	"github.com/kazouphq/metadata/api/client"
+	example "github.com/kazouphq/metadata/srv/proto/example"
 	"github.com/micro/go-micro/errors"
 	api "github.com/micro/micro/api/proto"
-	example "github.com/micro/micro/examples/template/srv/proto/example"
 
 	"golang.org/x/net/context"
 )
@@ -24,7 +24,7 @@ func extractValue(pair *api.Pair) string {
 	return pair.Values[0]
 }
 
-// Example.Send is called by the API as /metadata/example/call with post body {"name": "foo"}
+// Example.Send is called by the API as /metadata/example/send with post body {"fileName": "foo","filePath":"bar"}
 func (e *Example) Send(ctx context.Context, req *api.Request, rsp *api.Response) error {
 	log.Print("Received Example.Call request")
 
@@ -35,8 +35,9 @@ func (e *Example) Send(ctx context.Context, req *api.Request, rsp *api.Response)
 	}
 
 	// make request
-	response, err := exampleClient.Call(ctx, &example.Request{
-		Name: extractValue(req.Post["name"]),
+	response, err := exampleClient.Send(ctx, &example.Request{
+		FileName: extractValue(req.Post["fileName"]),
+		FilePath: extractValue(req.Post["filePath"]),
 	})
 	if err != nil {
 		return errors.InternalServerError("go.micro.api.metadata.example.call", err.Error())
